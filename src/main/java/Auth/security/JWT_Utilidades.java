@@ -70,7 +70,7 @@ public class JWT_Utilidades {
 				.setClaims(claims)
 				.setSubject(authentication.getName())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2)))
+				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10000)))
 				.signWith(SignatureAlgorithm.HS256, SECRET).compact();
 	}
 

@@ -1,7 +1,5 @@
 package Auth.controller;
-
 import Auth.dto.UsuarioDTO;
-
 import Auth.model.Usuario;
 import Auth.repository.UsuarioRepository;
 import Auth.security.JWT_Utilidades;
@@ -14,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -96,18 +95,17 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody UsuarioDTO usuario_dto) {
-        Authentication authentication = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(usuario_dto.getEmail(), usuario_dto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(usuario_dto.getEmail(), usuario_dto.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return this.jwt_utilidad.generateToken(authentication);
 
-        return this.jwt_utilidad.generateToken(authentication);
 
     }
 
 
     @PostMapping("/genToken")
     public String get_token(@RequestBody UsuarioDTO usuario_dto) throws Exception {
-        System.out.println(usuario_dto);
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(usuario_dto.getEmail(), usuario_dto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
