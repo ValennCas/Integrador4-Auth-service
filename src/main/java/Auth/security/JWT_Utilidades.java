@@ -43,9 +43,9 @@ public class JWT_Utilidades {
 	}
 
 	public Claims extractAllClaims(String token) {
-		return Jwts.parser() // Cambia de parser() a parserBuilder()
+		return Jwts.parser()
 				.setSigningKey(SECRET)
-				.build() // Crea una instancia de JwtParser
+				.build()
 				.parseClaimsJws(token)
 				.getBody();
 	}

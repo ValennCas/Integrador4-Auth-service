@@ -51,27 +51,15 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-				.csrf(csrf -> csrf.disable())  // Deshabilitar CSRF
+				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/auth/login", "/auth/validateToken", "/error", "/auth/registro", "/auth/genToken").permitAll()
 						.anyRequest().authenticated()
 				)
 				.sessionManagement(session -> session
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-		// Añadir filtro de autenticación JWT
-		//http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-
 		return http.build();
 	}
-
-/*	@Bean
-	public JwtFilter authenticationTokenFilterBean() throws Exception {
-		return new JwtFilter();  // Tu filtro personalizado para JWT
-	}
-*/
-
-
 
 
 	@Bean

@@ -59,11 +59,10 @@ public class AuthController {
 
         if (isValid) {
             String role = userDetails.getAuthorities().stream()
-                    .findFirst() // Suponiendo que solo hay un rol
+                    .findFirst()
                     .map(GrantedAuthority::getAuthority)
-                    .orElse("ROLE_USER"); // Valor por defecto si no se encuentra rol
+                    .orElse("ROLE_USER");
 
-            // Retornar el rol y mensaje de token válido
             return ResponseEntity.ok(Collections.singletonMap("role", role));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido");
